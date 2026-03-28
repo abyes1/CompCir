@@ -10,10 +10,10 @@ PromClient client(transport);
 WriteRequest req(1, 1024);
 
 // Check out https://prometheus.io/docs/practices/naming/ for metric naming and label conventions.
-TimeSeries ts_temp(5, "temperature", "{job=\"esp32-test\",host=\"esp32\"}");
+TimeSeries ts_temp(1, "temperature", "{job=\"esp32-test\",host=\"esp32\"}");
 
-// TimeSeries ts_humid(20, "humidity", "{job=\"esp32-test\",host=\"esp32\",foo=\"bar\"}");
-// TimeSeries ts_pressure(20, "pressure", "{job=\"esp32-test\",host=\"esp32\"}");
+// TimeSeries ts_humid(1, "humidity", "{job=\"esp32-test\",host=\"esp32\",foo=\"bar\"}");
+// TimeSeries ts_pressure(1, "pressure", "{job=\"esp32-test\",host=\"esp32\"}");
 // TimeSeries ts_avg_curr(10, "average_current_2_sec", "{job=\"esp32-test\",host=\"esp32\"}");
 // TimeSeries ts_co_meas(20, "carbon_monoxide", "{job=\"esp32-test\",host=\"esp32\"}");
 // TimeSeries ts_sound(2, "sound_level", "{job=\"esp32-test\",host=\"esp32\"}");
@@ -23,7 +23,6 @@ int loopCounter = 0;
 void setup() {
 
     Serial.begin(115200);
-    Serial.println("Starting - 1");
 
     // Wait 5s for serial connection or continue without it
     // Initialized to 0 to prevent garbage memory bugs
@@ -39,7 +38,7 @@ void setup() {
 
     // Configure and start the transport layer
     transport.setUseTls(true); // MUST be true for HTTPS port 443
-    // transport.setCerts(grafanaCert, strlen(grafanaCert));
+    transport.setCerts(grafanaCert, strlen(grafanaCert));
     transport.setWifiSsid(WIFI_SSID);
     transport.setWifiPass(WIFI_PASSWORD);
     transport.setDebug(Serial);
